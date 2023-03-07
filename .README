@@ -1,0 +1,31 @@
+# Dynamic Mocks
+
+Dynamic Mocks is an application to create functional mocks by a CRUD.
+
+## Installation
+
+Use the package manager [maven](https://maven.apache.org/) to install this application.
+
+```bash
+mvn clean install
+```
+
+## Functional Requeriments
+
+* A client can create a new mock endpoint by sending a POST request to the /create endpoint.
+* A client can list all mocks by sending a GET request to the /get endpoint.
+* A client can update a mock endpoint by sending a PUT request to the /edit endpoint.
+
+## Usage
+
+In order to configure a new mock, you should use the /create endpoint.
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
