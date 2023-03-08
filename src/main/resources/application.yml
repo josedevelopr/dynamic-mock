@@ -1,2 +1,5 @@
 server:
   port: 9003
+application:
+  endpoint:
+    mock: /dynamic-mock/manager/mock
