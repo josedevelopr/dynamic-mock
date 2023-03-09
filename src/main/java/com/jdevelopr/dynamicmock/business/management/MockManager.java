@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+import static com.jdevelopr.dynamicmock.web.response.ApplicationResponseTemplate.*;
+
 @Service
 public class MockManager {
 
@@ -20,9 +22,9 @@ public class MockManager {
     try {
       mockRepository.addMockConfiguration(newMock);
     } catch (Exception e) {
-      return new ApplicationResponse("DM0001", "Something went wrong");
+      return MOCK_NOT_CREATED.getResponse();
     }
-    return new ApplicationResponse("DM0000", "Created successfully.");
+    return MOCK_CREATED_SUCCESSFULLY.getResponse();
   }
 
   public String getMockResponseByUrl(String requestURI) {
@@ -43,6 +45,6 @@ public class MockManager {
         return configuredMock.getResponse();
       }
     }
-    return new ApplicationResponse("DM0003", "Mock not found").toString();
+    return MOCK_NOT_FOUND.getResponse().toString();
   }
 }
