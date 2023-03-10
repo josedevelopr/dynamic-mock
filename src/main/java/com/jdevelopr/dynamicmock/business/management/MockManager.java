@@ -1,30 +1,39 @@
 package com.jdevelopr.dynamicmock.business.management;
 
-import com.jdevelopr.dynamicmock.business.model.Mock;
+import com.jdevelopr.dynamicmock.business.model.DynamicMock;
 import com.jdevelopr.dynamicmock.business.model.MockConfiguration;
 import com.jdevelopr.dynamicmock.business.repository.MockRepository;
 import com.jdevelopr.dynamicmock.web.model.ApplicationResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import static com.jdevelopr.dynamicmock.web.model.ApplicationResponseTemplate.*;
 
-import static com.jdevelopr.dynamicmock.web.response.ApplicationResponseTemplate.*;
-
+@RequiredArgsConstructor
 @Service
 public class MockManager {
 
-  private MockRepository mockRepository = new MockRepository(new ArrayList<>());
+  @Autowired
+  private final MockRepository mockRepository;
   @Value("${application.endpoint.mock}")
   private String dynamicMockPath;
 
-  public ApplicationResponse registerMockConfiguration(Mock newMock) {
+  public ApplicationResponse registerMockConfiguration(DynamicMock newMock) {
     try {
-      mockRepository.addMockConfiguration(newMock);
+      registerMock(newMock);
     } catch (Exception e) {
       return MOCK_NOT_CREATED.getResponse();
     }
     return MOCK_CREATED_SUCCESSFULLY.getResponse();
+  }
+
+  private void registerMock(DynamicMock newMock) {
+    if (newMock.getPath() == null || newMock.getResponse() == null) {
+      throw new IllegalArgumentException("Dynamic mock has null values and cannot be registered.");
+    }
+    mockRepository.createMockConfiguration(newMock);
   }
 
   public String getMockResponseByUrl(String requestURI) {

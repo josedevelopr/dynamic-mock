@@ -9,7 +9,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @JsonSerialize
-public class Mock implements Serializable {
+public class DynamicMock implements Serializable {
   private String path;
   private String response;
 }

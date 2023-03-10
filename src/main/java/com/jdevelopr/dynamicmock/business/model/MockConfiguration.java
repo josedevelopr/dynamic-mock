@@ -5,10 +5,10 @@ import lombok.Getter;
 import java.util.Date;
 
 @Getter
-public class MockConfiguration extends Mock {
+public class MockConfiguration extends DynamicMock {
   private final Date creationDate;
 
-  public MockConfiguration(Mock mock) {
+  public MockConfiguration(DynamicMock mock) {
     super(mock.getPath(), mock.getResponse());
     this.creationDate = new Date();
   }

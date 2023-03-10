@@ -1,7 +1,7 @@
 package com.jdevelopr.dynamicmock.web.expose;
 
 import com.jdevelopr.dynamicmock.business.management.MockManager;
-import com.jdevelopr.dynamicmock.business.model.Mock;
+import com.jdevelopr.dynamicmock.business.model.DynamicMock;
 import com.jdevelopr.dynamicmock.web.model.ApplicationResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
@@ -22,7 +22,7 @@ public class MockManagementController {
   private MockManager mockManager;
 
   @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity registerNewMockConfiguration(@RequestBody Mock mock) {
+  public ResponseEntity registerNewMockConfiguration(@RequestBody DynamicMock mock) {
     ApplicationResponse response = mockManager.registerMockConfiguration(mock);
     return ResponseEntity.ok(response);
   }

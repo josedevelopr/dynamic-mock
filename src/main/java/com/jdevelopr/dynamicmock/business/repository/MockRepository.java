@@ -1,16 +1,17 @@
 package com.jdevelopr.dynamicmock.business.repository;
 
-import com.jdevelopr.dynamicmock.business.model.Mock;
+import com.jdevelopr.dynamicmock.business.model.DynamicMock;
 import com.jdevelopr.dynamicmock.business.model.MockConfiguration;
-import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
+@Component
 public class MockRepository {
-  private List<MockConfiguration> configuredMocks;
+  private List<MockConfiguration> configuredMocks = new ArrayList<>();
 
-  public void addMockConfiguration(Mock newMock) {
+  public void createMockConfiguration(DynamicMock newMock) {
     MockConfiguration newConfiguration = new MockConfiguration(newMock);
     configuredMocks.add(newConfiguration);
   }

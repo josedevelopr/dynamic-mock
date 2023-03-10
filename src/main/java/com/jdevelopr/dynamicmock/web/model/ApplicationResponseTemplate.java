@@ -1,6 +1,5 @@
-package com.jdevelopr.dynamicmock.web.response;
+package com.jdevelopr.dynamicmock.web.model;
 
-import com.jdevelopr.dynamicmock.web.model.ApplicationResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
