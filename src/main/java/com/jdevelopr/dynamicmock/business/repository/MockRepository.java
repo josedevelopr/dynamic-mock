@@ -19,4 +19,11 @@ public class MockRepository {
   public List<MockConfiguration> listAllMockConfigurations() {
     return configuredMocks;
   }
+
+  public boolean checkIfPathExists(String pathToCheck) {
+    return configuredMocks.stream()
+      .filter(mock -> pathToCheck.equals(mock.getPath()))
+      .findAny()
+      .isPresent();
+  }
 }

@@ -15,7 +15,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class MockManagerTest {
@@ -46,8 +46,18 @@ public class MockManagerTest {
   @Test
   void registerMockConfigurationWhenRepositoryThrowsException() {
     DynamicMock newMock = new DynamicMock(null, null);
-    doThrow(new IllegalArgumentException()).when(mockRepository).createMockConfiguration(newMock);
 
+    ApplicationResponse actualResult = mockManager.registerMockConfiguration(newMock);
+    ApplicationResponse expectedResult =
+      ApplicationResponseTemplate.MOCK_NOT_CREATED.getResponse();
+
+    assertEquals(expectedResult, actualResult);
+  }
+
+  @Test
+  void registerMockConfigurationWhenPathIsAlreadyRegisteredShouldThrowsException() {
+    DynamicMock newMock = new DynamicMock("/path", "{\"response\":\"ok\"}");
+    when(mockRepository.checkIfPathExists(anyString())).thenReturn(true);
     ApplicationResponse actualResult = mockManager.registerMockConfiguration(newMock);
     ApplicationResponse expectedResult =
       ApplicationResponseTemplate.MOCK_NOT_CREATED.getResponse();

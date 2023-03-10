@@ -1,5 +1,6 @@
 package com.jdevelopr.dynamicmock.business.management;
 
+import com.jdevelopr.dynamicmock.business.config.exception.DuplicatedMockException;
 import com.jdevelopr.dynamicmock.business.model.DynamicMock;
 import com.jdevelopr.dynamicmock.business.model.MockConfiguration;
 import com.jdevelopr.dynamicmock.business.repository.MockRepository;
@@ -30,10 +31,26 @@ public class MockManager {
   }
 
   private void registerMock(DynamicMock newMock) {
+    validateMockToRegister(newMock);
+    mockRepository.createMockConfiguration(newMock);
+  }
+
+  private void validateMockToRegister(DynamicMock newMock) {
+    checkIfAnyFieldIsNull(newMock);
+    checkIfMockIsAlreadyRegistered(newMock);
+  }
+
+  private void checkIfMockIsAlreadyRegistered(DynamicMock newMock) {
+    boolean mockIsRegistered = mockRepository.checkIfPathExists(newMock.getPath());
+    if (mockIsRegistered) {
+      throw new DuplicatedMockException(newMock);
+    }
+  }
+
+  private void checkIfAnyFieldIsNull(DynamicMock newMock) {
     if (newMock.getPath() == null || newMock.getResponse() == null) {
       throw new IllegalArgumentException("Dynamic mock has null values and cannot be registered.");
     }
-    mockRepository.createMockConfiguration(newMock);
   }
 
   public String getMockResponseByUrl(String requestURI) {
